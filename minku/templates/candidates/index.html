@@ -1,0 +1,109 @@
+
+{% extends "candidates/base.html" %}
+
+{% block content %}
+
+<h3>识别简历信息</h3>
+<form method="POST" class="form-horizontal" role='form' action="{% url 'candidates:candidates_spider' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+   <div class="form-group">
+       <div class="col-md-12">
+           <button type="submit" class="btn btn-primary form-control">开始识别</button>
+       </div>
+   </div>
+</form>
+
+
+
+{% if page_obj %}
+<table class="table table-striped">
+    <tbody>
+    {% for key, val in page_obj.items %}
+        {% if  val %}
+            {% if  key in "company_records_dict,project_records_dict,edu_records_dict" %}
+                {% for sub_key, sub_val in val.items %}
+                    <tr>
+                        <td>{{ sub_key }}</td>
+                        <td>
+                            {% for grand_key, grand_val in sub_val.items %}
+                                <b>{{ grand_key }}: </b>
+                                <div>
+                                  {{ grand_val }}
+                                </div>
+                                <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>
+                        <b>
+                          {{ val }}
+                        </b>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    </tbody>
+</table>
+
+
+{#<h3>{{ page_obj }}</h3>#}
+{#<table class="table table-striped">#}
+{#    <thead>#}
+{#        <tr>#}
+{#            <th>标题</th>#}
+{#            <th>小区</th>#}
+{#            <th>房厅</th>#}
+{#            <th>面积</th>#}
+{#            <th>年份</th>#}
+{#            <th>板块</th>#}
+{#            <th>总价(万)</th>#}
+{#            <th>单价(元/平方米)</th>#}
+{#        </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#     {% for house in page_obj %}#}
+{#        <tr>#}
+{#            <td>#}
+{#            {{ house.title }}#}
+{#            </td>#}
+{#            <td>#}
+{#            {{ house.house }}#}
+{#            </td>#}
+{#            <td>#}
+{#            {{ house.bedroom }}#}
+{#            </td>#}
+{#             <td>#}
+{#             {{ house.area }}#}
+{#            </td>#}
+{#             <td>#}
+{#             {{ house.year }}#}
+{#            </td>#}
+{#            <td>#}
+{#             {{ house.location }}#}
+{#            </td>#}
+{#             <td>#}
+{#            {{ house.total_price }}#}
+{#            </td>#}
+{#            <td>#}
+{#                {{ house.unit_price }}#}
+{#            </td>#}
+{#     {% endfor %}#}
+{#        </tr>#}
+{#    </tbody>#}
+{#</table>#}
+
+{% else %}
+{# 注释: 这里可以换成自己的对象 #}
+    <p>尚无信息。</p>
+{% endif %}
+
+
+{% endblock %}

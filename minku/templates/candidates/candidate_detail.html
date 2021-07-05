@@ -1,0 +1,429 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{{ candidate.basic_username }}</title>
+    <link href="{% static 'css/common.e5cd9659.css' %}" rel="stylesheet">
+    <link href="{% static 'css/vendors.e5cd9659.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/candidate.detail.e5cd9659.css' %}">
+</head>
+
+<body>
+<div id="resume-detail">
+    <header class="hfw-header-wrap">
+        <div class="header-main">
+            <div class="wrap relative">
+                <div class="header-logo"><a class="logo" title="mincai" href="#"><span role="img" class="anticon header-logo-icon"><svg
+                        width="1em" height="1em" viewBox="0 0 97 28" fill="currentColor" aria-hidden="true"
+                        focusable="false" class=""><g fill="none" fill-rule="evenodd"><path
+                        fill="#FF5700"></path><path
+                        fill="#FFF"></path><path
+                        fill="#FF5700"></path></g></svg></span></a></div>
+{#                <div class="hfw-header-quick-menu">#}
+{##}
+{#                    <div class="hfw-header-drop-menu quick-menu-box">#}
+{#                        <div class="drop-menu-item ">#}
+{#                            <a title="用户" href="#" class="quick-menu-item name">#}
+{#                                <span class="name-val ellipsis">{{ system_user }}</span></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+        </div>
+    </header>
+
+    <div>
+        <div class="hunt-spin hunt-spin-hide rd-global-boundary wrap">
+            <div class="hunt-spin-loading"><i class="text-icon icon-hunt-loading hunt-spin-loading-icon global-indicator"></i></div>
+                <div class="clearfix single-resume-wrap">
+                    <section id="resume-detail-single" class="single-resume-left">
+                        <div class="resume-body">
+                            <div class="hunt-tabs hunt-tabs-top hunt-tabs-line hunt-tabs-no-animation resume-body-tabs">
+
+                                <div role="tablist" class="hunt-tabs-bar hunt-tabs-top-bar resume-body-bar"
+                                     tabindex="0">
+                                    <div class="hunt-tabs-extra-content" style="float: right;">
+                                        <div class="resume-extra-info">
+                                            <span>上传者：{{ candidate.creator }}</span>
+                                            <i class="separated">|</i>
+                                            <span>最后编辑：{{ candidate.last_editor }}</span>
+                                            <i class="separated">|</i>
+                                            <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                    type="submit"
+                                                    class="hunt-btn primary chat-btn"
+                                                    onclick="location.href='/admin/candidates/candidate/{{ candidate.id }}/change/'">
+                                                <span>编辑</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="hunt-tabs-nav-container"><span unselectable="unselectable"
+                                                                               class="hunt-tabs-tab-prev hunt-tabs-tab-btn-disabled"><span
+                                            class="hunt-tabs-tab-prev-icon"><i
+                                            class="text-icon icon-hunt-arrow-left hunt-tabs-tab-prev-icon-target"></i></span></span><span
+                                            unselectable="unselectable"
+                                            class="hunt-tabs-tab-next hunt-tabs-tab-btn-disabled"><span
+                                            class="hunt-tabs-tab-next-icon"><i
+                                            class="text-icon icon-hunt-arrow-right hunt-tabs-tab-next-icon-target"></i></span></span>
+                                        <div class="hunt-tabs-nav-wrap">
+                                            <div class="hunt-tabs-nav-scroll">
+                                                <div class="hunt-tabs-nav hunt-tabs-nav-animated">
+                                                    <div>
+                                                        <div role="tab" aria-disabled="false" aria-selected="true"
+                                                             class="hunt-tabs-tab-active hunt-tabs-tab"
+                                                             style="margin-right: 14px;">
+                                                            <div><i class="res-tab-border res-tab-border-left"></i><span
+                                                                    class="res-tab-title">中文简历</span><i
+                                                                    class="res-tab-border res-tab-border-right"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hunt-tabs-ink-bar hunt-tabs-ink-bar-no-animated"
+                                                         style="display: block; transform: translate3d(12px, 0px, 0px); width: 100px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div tabindex="0" role="presentation"
+                                     style="width: 0px; height: 0px; overflow: hidden; position: absolute;"></div>
+
+                                <div class="hunt-tabs-content hunt-tabs-content-no-animated hunt-tabs-top-content">
+                                    <div role="tabpanel" aria-hidden="false"
+                                         class="hunt-tabs-tabpane hunt-tabs-tabpane-active">
+                                        <div tabindex="0" role="presentation"
+                                             style="width: 0px; height: 0px; overflow: hidden; position: absolute;"></div>
+                                        <div class="resume-body-cont">
+
+                                            <div id="resume-detail-basic-info" class="resume-detail-basic-info">
+
+                                                <div class="logo-box"><img class="res-logo" src="{% static 'images/avatar.png' %}" alt=""></div>
+
+                                                <div class="basic-cont">
+                                                    <div class="name-box"><h4 class="name ellipsis" title={{ candidate.basic_username }}>{{ candidate.basic_username }}</h4>
+                                                        {% if candidate.basic_user_status %}
+                                                            <span class="user-status-tag">{{ candidate.basic_user_status }}</span>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <div class="sep-info">
+                                                        {{ candidate.basic_gender }}<i></i>
+                                                        {{ candidate.basic_age }}<i></i>
+                                                        {{ candidate.basic_marriage_status }}<i></i>
+                                                        {{ candidate.work_city }}<i></i>
+                                                        {{ candidate.basic_edu_degree }}<i></i>
+                                                        {{ candidate.basic_work_years }}<i></i>
+                                                        {{ candidate.work_salary }}
+                                                    </div>
+
+                                                    <div class="sep-info">{{ candidate.work_position }}<i></i>{{ candidate.work_company }}</div>
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="" style="">
+                                                    <div class="resume-detail-operation-wrap">
+                                                        <div class="rd-operation-left">
+                                                            <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D" type="button" class="hunt-btn primary chat-btn">
+                                                                <i class="text-icon icon-chat"></i>
+                                                                <span>{{ candidate.basic_phone }}</span>
+                                                            </button>
+                                                            <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                                    type="button"
+                                                                    class="hunt-btn line primary recom-job-btn"><span>推荐职位</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-job-expectancy-info"
+                                                 id="resume-detail-job-exp-info"><h3>职业期望</h3>
+                                                <div class="resume-detail-template-cont">
+                                                    {% if candidate.work_salary and candidate.work_salary != "保密" %}
+                                                        <div class="rd-info-row">
+                                                            <div class="rd-info-col">
+                                                                <div class="rd-info-col-title" style="width: 6em;">目前薪资： </div>
+                                                                <div class="rd-info-col-cont"><span>{{ candidate.work_salary }}</span></div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% if candidate.work_industry %}
+                                                        <div class="rd-info-row">
+                                                            <div class="rd-info-col">
+                                                                <div class="rd-info-col-title" style="width: 6em;">目前行业： </div>
+                                                                <div class="rd-info-col-cont"><span>{{ candidate.work_industry }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% if candidate.expect_position or candidate.expect_salary or candidate.expect_city  %}
+                                                        <div class="rd-info-row want-job-label">
+                                                            <div class="rd-info-col">
+                                                                <div class="rd-info-col-title" style="width: 6em;">期望职位： </div>
+                                                                <div class="rd-info-col-cont">
+                                                                    <div class="want-job">
+                                                                        <div class="job-card-left">
+                                                                            <p class="info">
+                                                                                {% if candidate.expect_position %} <span class="job-name">{{ candidate.expect_position }}</span> {% endif %}
+                                                                                {% if candidate.expect_salary %} <span class="salary">{{ candidate.expect_salary }}</span> {% endif %}
+                                                                                {% if candidate.expect_city %} <span class="address">{{ candidate.expect_city }}</span> {% endif %}
+                                                                            </p>
+                                                                            {% if candidate.expect_industry %} <p class="industry ellipsis" title="{{ candidate.expect_industry }}">{{ candidate.expect_industry }}</p> {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-work-info" id="resume-detail-work-info">
+                                                <h3>工作经历</h3>
+                                                <div class="resume-detail-template-cont">
+                                                    {% for company_records in company_records_list %}
+                                                        <div class="rd-info-tpl-item rd-work-item-cont">
+                                                            <div class="rd-info-tpl-item-head">
+                                                                <div class="rd-work-info-head">
+                                                                    <div class="rd-work-comp">
+                                                                        <h5 class="ellipsis" title="{{ company_records.work_company }}">{{ company_records.work_company }}</h5>
+                                                                    </div>
+                                                                    <span class="rd-work-time">  {{ company_records.work_company_type }}</span>
+                                                                    <span class="rd-work-time">（{{ company_records.work_start_date }} - {{ company_records.work_start_date }})</span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="rd-info-tpl-item-cont">
+
+                                                                <h6 class="job-name">{{ company_records.work_position }}</h6>
+
+                                                                {% if company_records.work_department %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">所在部门：</div>
+                                                                            <div class="rd-info-col-cont"><span>{{ company_records.work_department }}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                                <div class="rd-info-row">
+                                                                    {% if company_records.work_subordinate %}
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">下属人数：</div>
+                                                                            <div class="rd-info-col-cont"><span>{{ company_records.work_subordinate }}</span></div>
+                                                                        </div>
+                                                                    {% endif %}
+
+                                                                    {% if company_records.work_report_to %}
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">汇报对象：</div>
+                                                                            <div class="rd-info-col-cont"><span>{{ company_records.work_report_to }}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="rd-info-row">
+                                                                    {% if company_records.work_achievements %}
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">职责业绩：</div>
+                                                                            <div class="rd-info-col-cont"><span><pre>{{ company_records.work_achievements }}</pre></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-project-info" id="resume-detail-project-info">
+                                                <h3>项目经历</h3>
+                                                <div class="resume-detail-template-cont">
+
+                                                    {% for project_records in project_records_list %}
+                                                        <div class="rd-info-tpl-item rd-project-item-cont">
+
+                                                            <div class="rd-info-tpl-item-head">
+                                                                <div class="rd-project-info-head">
+                                                                    <div class="rd-project-name"><h5 class="ellipsis" title={{ project_records.project }}>{{ project_records.project }}</h5></div>
+                                                                    <span class="rd-project-time">（{{ project_records.project_start_date }} - {{ project_records.project_end_date }})</span></div>
+                                                            </div>
+
+                                                            <div class="rd-info-tpl-item-cont">
+                                                                {% if project_records.project_position %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">项目职务：</div>
+                                                                            <div class="rd-info-col-cont"><span>{{ project_records.project_position }}</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                                {% if project_records.project_company %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">所在公司：</div>
+                                                                            <div class="rd-info-col-cont"><span>{{ project_records.project_company }}</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                                {% if project_records.project_description %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">项目描述：</div>
+                                                                            <div class="rd-info-col-cont"><span><pre>{{ project_records.project_description }}</pre></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                                {% if project_records.project_responsibility %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">项目职责：</div>
+                                                                            <div class="rd-info-col-cont"><span><pre>{{ project_records.project_responsibility }}</pre></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                                {% if project_records.project_achievements %}
+                                                                    <div class="rd-info-row">
+                                                                        <div class="rd-info-col">
+                                                                            <div class="rd-info-col-title">项目业绩：</div>
+                                                                            <div class="rd-info-col-cont"><span><pre>{{ project_records.project_achievements }}</pre></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                </div>
+
+
+{#                                                        <div>#}
+{#                                                            {{ candidate.self_judgement }}#}
+{#                                                        </div>#}
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-edu-info"
+                                                 id="resume-detail-edu-info"><h3>教育经历</h3>
+                                                <div class="resume-detail-template-cont">
+
+                                                    {% for edu_record in edu_record_list %}
+                                                        <div class="rd-edu-info-item">
+                                                            <div class="school-logo-box">
+{#                                                                <img src="{% static 'candidates/04849eb4-0955-4e89-928a-ca5d7629396d.png' %}" alt="">#}
+                                                            </div>
+                                                            <div class="rd-edu-info-item-cont">
+                                                                <div class="edu-school-cont"><span
+                                                                        class="school-name ellipsis"
+                                                                        title="{{ edu_record.edu_school }}">{{ edu_record.edu_school }}</span><i> · </i><span
+                                                                        class="school-special ellipsis"
+                                                                        title="{{ edu_record.edu_major }}">{{ edu_record.edu_major }}</span><i>
+                                                                    · </i><span class="school-degree ellipsis"
+                                                                                title="{{ edu_record.edu_degree }}">{{ edu_record.edu_degree }}</span><span
+                                                                        class="school-time">{{ edu_record.edu_start_date }} - {{ edu_record.edu_end_date }}</span></div>
+                                                                <div class="edu-school-tags"><i class="tag-item">{{ edu_record.edu_degree_value }}</i></div>
+                                                            </div>
+                                                        </div>
+                                                {% endfor %}
+
+                                                </div>
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-self-evaluation-info"
+                                                 id="resume-detail-self-eva-info"><h3>自我评价</h3>
+                                                <div class="resume-detail-template-cont">
+                                                    <div>
+                                                        <pre>{{ candidate.self_judgement }}</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="resume-detail-template resume-detail-addition-info"
+                                                 id="resume-detail-addition-info"><h3>附加消息</h3>
+                                                <div class="resume-detail-template-cont">
+                                                    <div><pre>{{ candidate.additional_comments }}</pre></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-statement">
+                                                声明：该人选信息仅供公司内部顾问招聘使用，严禁外泄。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="single-resume-right">
+                        <div class="resume-node-box">
+                            <div class="resume-node-recent">
+                                <div class="title-box flex align-items-center">
+                                    <h3>简历备注</h3>
+                                </div>
+
+                                <div class="recent-detail-cont">
+                                    <dl class="node-detail">
+                                    <form method="POST" class="form-horizontal" role='form' action="{% url 'candidates:add_candidate_comment' candidate.id %}" enctype="multipart/form-data">
+                                      {% csrf_token %}
+                                      {{ form.as_p }}
+                                       <div class="form-group" style="position:relative;top:10px">
+                                            <button type="submit" class="hunt-btn primary chat-btn">
+                                                <span>提交</span>
+                                            </button>
+                                       </div>
+                                    </form>
+                                    </dl>
+                                </div>
+
+                                <div class="recent-detail-cont">
+                                    <dl class="node-detail">
+                                        {% for comment in comments_list %}
+                                            <dd class="dot-line">
+                                                <p class="name">{{ comment.created_date }} - {{ comment.creator }}:</p>
+                                                <p class="cont" title="{{ comment.comment_content }}">{{ comment.comment_content }}</p>
+                                            </dd>
+                                        {% endfor %}
+                                    </dl>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="hfw-footer-wrap">
+        <div class="footer-left"><p>Copyright©2020-2021 mincai.site All Rights Reserved</p></div>
+    </footer>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

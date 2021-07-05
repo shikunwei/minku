@@ -1,0 +1,8 @@
+django-simpleui
+Django>=3.0,<4.0
+bootstrap4
+beautifulsoup4
+lxml
+python3-ldap
+django-auth-ldap
+psycopg2>=2.8.6,<2.8.7

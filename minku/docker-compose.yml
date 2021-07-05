@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+#    ports:
+#      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - nginx_network
+      - database_network  # <-- connect to the bridge
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:  # <-- connect to the bridge
+      - database_network
+  nginx:
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:  # <-- wait for djangoapp to be "ready" before starting this service
+      - web
+    networks:  # <-- here
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+  database_network:
+    driver: bridge

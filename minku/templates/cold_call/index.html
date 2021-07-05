@@ -1,0 +1,41 @@
+
+{% extends "cold_call/base.html" %}
+
+{% block content %}
+
+<h3>导入Cold Call</h3>
+<form method="POST" class="form-horizontal" role='form' action="{% url 'cold_call:cold_call_spider' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+   <div class="form-group">
+       <div class="col-md-12">
+           <button type="submit" class="btn btn-primary form-control">开始识别</button>
+       </div>
+   </div>
+</form>
+
+{% if page_obj %}
+<table class="table table-striped">
+    <tbody>
+        {% for key, val in page_obj.items %}
+            <tr>
+                {% for title in page_obj.info_dict_title %}
+                    {% if key == "info_dict_title" %}
+                        <td><h5><b>{{ title }}</b></h5></td>
+                    {% else %}
+                        <td>{{ val|get_item:title  }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% else %}
+{# 注释: 这里可以换成自己的对象 #}
+    <p>尚无信息。</p>
+{% endif %}
+
+
+{% endblock %}
