@@ -67,7 +67,7 @@ class ProjectRecordsInline(admin.StackedInline):
 
 class CommentsInline(admin.StackedInline):
     exclude = ('creator', 'created_date', 'modified_date', 'last_editor')
-    list_display = ('comment_created_date', 'comment_content')
+    list_display = ('created_date', 'comment_content')
     model = Comments
     extra = 1
 

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
+from django.utils import timezone
+
 YEAR_CHOICES = []
 for r in range(1970, (datetime.now().year - 10)):
     YEAR_CHOICES.append((r, r))
@@ -159,7 +161,7 @@ class Comments(models.Model):
 
     # 录入者信息
     creator = models.CharField(max_length=32, blank=True, verbose_name=u'候选人数据的创建人')
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=u'创建时间')
+    created_date = models.DateTimeField(default=timezone.now, verbose_name=u'创建时间')
     modified_date = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name=u'更新时间')
     last_editor = models.CharField(max_length=32, blank=True, verbose_name=u'最后编辑者')
 

@@ -159,7 +159,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         json_dir = kwargs['path']
-        json_file_list = os.listdir(json_dir)[:10]# 列出文件夹下所有的目录与文件
+        json_file_list = os.listdir(json_dir)  # 列出文件夹下所有的目录与文件
         # for i in range(0, len(json_file_list)):
         for i in range(0, len(json_file_list)):
             if json_file_list[i][-4:] == 'json':

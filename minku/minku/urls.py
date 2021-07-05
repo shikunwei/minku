@@ -20,5 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('candidates/', include('candidates.urls')),
     path('cold_call/', include('cold_call.urls')),
-    path('', admin.site.urls),
 ]
