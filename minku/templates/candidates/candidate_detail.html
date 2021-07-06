@@ -47,9 +47,9 @@
                                      tabindex="0">
                                     <div class="hunt-tabs-extra-content" style="float: right;">
                                         <div class="resume-extra-info">
-                                            <span>上传者：{{ candidate.creator }}</span>
+                                            <span>上传者：{{ candidate.candidate_creator }}</span>
                                             <i class="separated">|</i>
-                                            <span>最后编辑：{{ candidate.last_editor }}</span>
+                                            <span>最后编辑：{{ candidate.candidate_last_editor }}</span>
                                             <i class="separated">|</i>
                                             <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
                                                     type="submit"
@@ -397,7 +397,7 @@
                                     <dl class="node-detail">
                                         {% for comment in comments_list %}
                                             <dd class="dot-line">
-                                                <p class="name">{{ comment.created_date }} - {{ comment.creator }}:</p>
+                                                <p class="name">{{ comment.comment_created_date }} - {{ comment.comment_creator }}:</p>
                                                 <p class="cont" title="{{ comment.comment_content }}">{{ comment.comment_content }}</p>
                                             </dd>
                                         {% endfor %}

@@ -104,7 +104,7 @@ def create_candidate_from_json(cdi_info_json):
             work_city=work_city,
             work_company=work_company,
             work_position=work_position,
-            creator=creator,
+            candidate_creator=creator,
         )
 
         print(candidate, " <<< candidate.id >>> ", candidate.id, " <<< candidate.age >>> ", candidate.get_age())
@@ -117,7 +117,7 @@ def create_candidate_from_json(cdi_info_json):
                 edu_start_date=school_start_date[i],
                 edu_end_date=school_end_date[i],
                 candidate=candidate,
-                creator=creator,
+                edu_creator=creator,
             )
             # print(edu_record, " <<< edu_record >>> ", degree[i], school[i], major[i], school_start_date[i],
             #       school_end_date[i], candidate.id)
@@ -130,21 +130,21 @@ def create_candidate_from_json(cdi_info_json):
                 work_start_date=company_start_date[i],
                 work_end_date=company_end_date[i],
                 candidate=candidate,
-                creator=creator,
+                work_creator=creator,
             )
 
         for key in comments:
             comment = Comments.objects.create(
                 comment_content=comments[key].split(':', 1)[1],
-                created_date=datetime.strptime(key, "%Y-%m-%d %H:%M:%S"),
+                comment_created_date=datetime.strptime(key, "%Y-%m-%d %H:%M:%S"),
                 candidate=candidate,
-                creator=creator,
+                comment_creator=creator,
             )
 
         project_records = ProjectRecords.objects.create(
             project_description=project_exp,
             candidate=candidate,
-            creator=creator,
+            project_creator=creator,
         )
 
     except Exception as e:

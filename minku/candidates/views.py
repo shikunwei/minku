@@ -10,10 +10,10 @@ from .models import Candidate, EduRecords, CompanyRecords, ProjectRecords, Comme
 
 def get_candidate_info_by_id(candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
-    edu_record_list = EduRecords.objects.all().filter(candidate=candidate_id)
-    company_records_list = CompanyRecords.objects.all().filter(candidate=candidate_id)
-    project_records_list = ProjectRecords.objects.all().filter(candidate=candidate_id)
-    comments_list = Comments.objects.all().order_by('-id').filter(candidate=candidate_id)
+    edu_record_list = EduRecords.objects.all().order_by('-edu_start_date').filter(candidate=candidate_id)
+    company_records_list = CompanyRecords.objects.all().order_by('-work_start_date').filter(candidate=candidate_id)
+    project_records_list = ProjectRecords.objects.all().order_by('-project_start_date').filter(candidate=candidate_id)
+    comments_list = Comments.objects.all().order_by('-comment_created_date').filter(candidate=candidate_id)
     return candidate, edu_record_list, company_records_list, project_records_list, comments_list
 
 
@@ -29,7 +29,7 @@ def add_candidate_comment(request, candidate_id):
             try:
                 comment = Comments.objects.create(
                     comment_content=form.cleaned_data['comment_content'],
-                    creator=request.user.username,
+                    comment_creator=request.user.username,
                     candidate=candidate,
                 )
             except Exception as e:
@@ -286,7 +286,7 @@ def get_cv_info_dict(request, cv_contents):
             self_judgement=self_judgement,
             additional_comments=additional_comments,
 
-            creator=request.user.username,
+            candidate_creator=request.user.username,
         )
 
         for company_name, company_record in company_records_dict.items():
@@ -300,7 +300,7 @@ def get_cv_info_dict(request, cv_contents):
                 work_position=company_record['work_position'],
                 work_report_to=company_record['work_report_to'],
                 work_achievements=company_record['work_achievements'],
-                creator=request.user.username,
+                work_creator=request.user.username,
                 candidate=candidate,
             )
 
@@ -314,7 +314,7 @@ def get_cv_info_dict(request, cv_contents):
                 project_description=project_record['project_description'],
                 project_responsibility=project_record['project_responsibility'],
                 project_achievements=project_record['project_achievements'],
-                creator=request.user.username,
+                project_creator=request.user.username,
                 candidate=candidate,
             )
 
@@ -326,7 +326,7 @@ def get_cv_info_dict(request, cv_contents):
                 edu_start_date=edu_record['edu_start_date'],
                 edu_end_date=edu_record['edu_end_date'],
                 edu_degree_value=edu_record['edu_degree_value'],
-                creator=request.user.username,
+                edu_creator=request.user.username,
                 candidate=candidate,
             )
 

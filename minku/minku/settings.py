@@ -149,7 +149,7 @@ SIMPLEUI_HOME_INFO = False
 SIMPLEUI_LOGO = '/static/images/mincai.png'
 SIMPLEUI_CONFIG = {
     'system_keep': True,  # 关闭系统菜单
-    'menu_display': ['Candidates', 'Cold_Call', '导入简历', '权限认证'],
+    'menu_display': ['Candidates', 'Cold_Call', '数据导入', '权限认证'],
     'dynamic': True,  # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时动态展示菜单内容
     'menus': [
         {
@@ -163,14 +163,19 @@ SIMPLEUI_CONFIG = {
             }]
         },
         {
-            'name': '导入简历',
+            'name': '数据导入',
             'icon': 'fa fa-file',
             'models': [{
                 'name': '导入猎聘简历',
                 'url': '/candidates/',
                 'icon': 'far el-icon-attract',
-            },]
-        }]
+            },{
+                'name': '导入cold_call',
+                'url': '/cold_call/',
+                'icon': 'far el-icon-attract',
+            }]
+        }
+    ]
 }
 
 # 修改Django认证先走ldap，再走本地认证
