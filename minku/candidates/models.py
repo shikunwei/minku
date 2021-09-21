@@ -52,7 +52,7 @@ class Candidate(models.Model):
     additional_comments = models.TextField(max_length=2046, blank=True, verbose_name=u'附加消息')
 
     # 录入者信息
-    candidate_creator = models.CharField(max_length=32, blank=True, verbose_name=u'候选人数据的创建人')
+    candidate_creator = models.CharField(max_length=32, blank=True, verbose_name=u'创建者')
     candidate_created_date = models.DateTimeField(auto_now_add=True, verbose_name=u'创建时间')
     candidate_modified_date = models.DateTimeField(auto_now=True, null=True, blank=True, verbose_name=u'更新时间')
     candidate_last_editor = models.CharField(max_length=32, blank=True, verbose_name=u'最后编辑者')
@@ -173,3 +173,23 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comment_creator
+
+
+class ActivateRecord(models.Model):
+    candidate = models.ForeignKey(to=Candidate, on_delete=models.CASCADE)
+    # 员工动作
+    is_activate_record = models.BooleanField(blank=False, verbose_name='本月申报')
+    # 录入者信息
+    activate_record_creator = models.CharField(max_length=32, blank=True, verbose_name=u'申报人')
+    activate_record_created_date = models.DateTimeField(default=timezone.now, verbose_name=u'申报时间')
+    # 取消者信息
+    activate_record_canceller = models.CharField(max_length=32, blank=True, verbose_name=u'取消者')
+    activate_record_cancel_date = models.DateTimeField(default=timezone.now, verbose_name=u'取消时间')
+
+    class Meta:
+        db_table = u'activate_records'
+        verbose_name = u'本月申报'
+        verbose_name_plural = u'本月申报'
+
+    def __str__(self):
+        return self.activate_record_creator

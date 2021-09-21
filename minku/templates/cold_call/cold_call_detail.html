@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CC{{ cold_call.basic_username }}</title>
+    <link href="{% static 'css/common.e5cd9659.css' %}" rel="stylesheet">
+    <link href="{% static 'css/vendors.e5cd9659.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/candidate.detail.e5cd9659.css' %}">
+</head>
+
+<body>
+<div id="resume-detail">
+    <header class="hfw-header-wrap">
+        <div class="header-main">
+            <div class="wrap relative">
+                <div class="header-logo"><a class="logo" title="mincai" href="#"><span role="img" class="anticon header-logo-icon"><svg
+                        width="1em" height="1em" viewBox="0 0 97 28" fill="currentColor" aria-hidden="true"
+                        focusable="false" class=""><g fill="none" fill-rule="evenodd"><path
+                        fill="#FF5700"></path><path
+                        fill="#FFF"></path><path
+                        fill="#FF5700"></path></g></svg></span></a></div>
+            </div>
+        </div>
+    </header>
+
+    <div>
+        <div class="hunt-spin hunt-spin-hide rd-global-boundary wrap">
+            <div class="hunt-spin-loading"><i class="text-icon icon-hunt-loading hunt-spin-loading-icon global-indicator"></i></div>
+                <div class="clearfix single-resume-wrap">
+
+                    <section id="resume-detail-single" class="single-resume-left">
+                        <div class="resume-body">
+                            <div class="hunt-tabs hunt-tabs-top hunt-tabs-line hunt-tabs-no-animation resume-body-tabs">
+
+                                <div role="tablist" class="hunt-tabs-bar hunt-tabs-top-bar resume-body-bar"
+                                     tabindex="0">
+                                    <div class="hunt-tabs-extra-content" style="float: right;">
+                                        <div class="resume-extra-info">
+                                            <span>上传者：{{ cold_call.cc_creator }}</span>
+                                            <i class="separated">|</i>
+                                            <span>最后编辑：{{ cold_call.cc_last_editor }}</span>
+                                            <i class="separated">|</i>
+                                            <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                    type="submit"
+                                                    class="hunt-btn primary chat-btn"
+                                                    onclick="location.href='/admin/cold_call/coldcall/{{ cold_call.id }}/change/'">
+                                                <span>编辑</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="hunt-tabs-nav-container"><span unselectable="unselectable"
+                                                                               class="hunt-tabs-tab-prev hunt-tabs-tab-btn-disabled"><span
+                                            class="hunt-tabs-tab-prev-icon"><i
+                                            class="text-icon icon-hunt-arrow-left hunt-tabs-tab-prev-icon-target"></i></span></span><span
+                                            unselectable="unselectable"
+                                            class="hunt-tabs-tab-next hunt-tabs-tab-btn-disabled"><span
+                                            class="hunt-tabs-tab-next-icon"><i
+                                            class="text-icon icon-hunt-arrow-right hunt-tabs-tab-next-icon-target"></i></span></span>
+                                        <div class="hunt-tabs-nav-wrap">
+                                            <div class="hunt-tabs-nav-scroll">
+                                                <div class="hunt-tabs-nav hunt-tabs-nav-animated">
+                                                    <div>
+                                                        <div role="tab" aria-disabled="false" aria-selected="true"
+                                                             class="hunt-tabs-tab-active hunt-tabs-tab"
+                                                             style="margin-right: 14px;">
+                                                            <div><i class="res-tab-border res-tab-border-left"></i><span
+                                                                    class="res-tab-title">基本信息</span><i
+                                                                    class="res-tab-border res-tab-border-right"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hunt-tabs-ink-bar hunt-tabs-ink-bar-no-animated"
+                                                         style="display: block; transform: translate3d(12px, 0px, 0px); width: 100px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div tabindex="0" role="presentation" style="width: 0px; height: 0px; overflow: hidden; position: absolute;"></div>
+
+                                <div class="hunt-tabs-content hunt-tabs-content-no-animated hunt-tabs-top-content">
+                                    <div role="tabpanel" aria-hidden="false"
+                                         class="hunt-tabs-tabpane hunt-tabs-tabpane-active">
+                                        <div tabindex="0" role="presentation" style="width: 0px; height: 0px; overflow: hidden; position: absolute;"></div>
+                                        <div class="resume-body-cont">
+
+                                            <div class="resume-detail-template resume-detail-work-info" id="resume-detail-work-info">
+                                                <h3>{{ cold_call.basic_username }}</h3>
+                                                <div class="resume-detail-template-cont">
+
+                                                    <div class="rd-info-tpl-item rd-work-item-cont">
+
+                                                        <div class="rd-info-tpl-item-head">
+                                                            <div class="rd-work-info-head">
+                                                                <div class="rd-work-comp">
+                                                                    <h5 class="ellipsis" title="{{ cold_call.work_company }}">{{ cold_call.work_company }}</h5>
+                                                                </div>
+                                                                <span class="rd-work-time">  {{ cold_call.basic_region }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="rd-info-tpl-item-cont">
+
+                                                            {% if cold_call.work_depart %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">部门：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.work_depart }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.work_position %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">职位：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.work_position }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.basic_gender %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">性别：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.basic_gender }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.basic_phone %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">电话：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.basic_phone }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.basic_email %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">邮箱：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.basic_email }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.basic_edu_school %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">毕业院校：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.basic_edu_school }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if cold_call.basic_edu_school %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">备注：</div>
+                                                                        <div class="rd-info-col-cont"><span>{{ cold_call.additional_comments }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if candidate %}
+                                                                <div class="rd-info-row">
+                                                                    <div class="rd-info-col">
+                                                                        <div class="rd-info-col-title">详细简历：</div>
+                                                                        <div class="rd-info-col-cont">
+                                                                            <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                                                    type="submit"
+                                                                                    class="hunt-btn primary chat-btn"
+                                                                                    onclick="location.href='/candidates/{{ candidate.id }}'">
+                                                                                <span>{{ candidate.basic_username }}</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="detail-statement">
+                                                声明：该人选信息仅供公司内部顾问招聘使用，严禁外泄。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="single-resume-right">
+                        <div class="resume-node-box">
+                            <div class="resume-node-recent">
+                                <div class="title-box flex align-items-center">
+                                    <h3>评论</h3>
+                                </div>
+
+                                <div class="recent-detail-cont">
+                                    <dl class="node-detail">
+                                    <form method="POST" class="form-horizontal" role='form' action="{% url 'cold_call:add_cold_call_comment' cold_call.id %}" enctype="multipart/form-data">
+                                      {% csrf_token %}
+                                      {{ form.as_p }}
+                                       <div class="form-group" style="position:relative;top:10px">
+                                            <button type="submit" class="hunt-btn primary chat-btn">
+                                                <span>提交</span>
+                                            </button>
+                                       </div>
+                                    </form>
+                                    </dl>
+                                </div>
+
+                                <div class="recent-detail-cont">
+                                    <dl class="node-detail">
+                                        {% for comment in comments_list %}
+                                            <dd class="dot-line">
+                                                <p class="name">{{ comment.cc_comment_created_date }} - {{ comment.cc_comment_creator }}:</p>
+                                                <p class="cont" title="{{ comment.comment_content }}">{{ comment.comment_content }}</p>
+                                            </dd>
+                                        {% endfor %}
+                                    </dl>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="hfw-footer-wrap">
+        <div class="footer-left"><p>Copyright©2020-2021 mincai.site All Rights Reserved</p></div>
+    </footer>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

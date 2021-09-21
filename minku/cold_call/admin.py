@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from cold_call.models import ColdCall, Comments
 from datetime import datetime
 
@@ -20,7 +21,7 @@ class CommentsInline(admin.StackedInline):
 # 候选人管理类
 class ColdCallAdmin(admin.ModelAdmin):
     exclude = ('cc_creator', 'cc_created_date', 'cc_modified_date', 'cc_last_editor')
-    list_display = ('basic_username', 'work_company', 'work_depart', 'work_position', 'basic_region', 'basic_phone',
+    list_display = ('get_detail', 'work_company', 'work_depart', 'work_position', 'basic_region', 'basic_phone',
                     'additional_comments', 'basic_email', 'basic_edu_school', 'basic_gender')
     # 右侧筛选条件
     list_filter = ('work_company', 'work_depart', 'work_position', 'basic_region', 'basic_gender',)
@@ -36,12 +37,12 @@ class ColdCallAdmin(admin.ModelAdmin):
             ("work_company", "work_depart", "work_position"),
             ("additional_comments",))}),
     )
-    #
-    # def get_resume(self, obj):
-    #     return mark_safe(u'<a href="/resumes/%s" target="_blank">%s</a' % (obj.id, "查看简历"))
-    #
-    # get_resume.short_description = '查看简历'
-    # get_resume.allow_tags = True
+
+    def get_detail(self, obj):
+        return mark_safe(u'<a href="/cold_call/%s" target="_blank">%s</a' % (obj.id, obj.basic_username))
+
+    get_detail.short_description = '姓名'
+    get_detail.allow_tags = True
 
     def save_model(self, request, obj, form, change):
         obj.cc_last_editor = request.user.username

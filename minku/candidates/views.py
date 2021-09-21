@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .forms import UploadFileForm, CommentForm
 from bs4 import BeautifulSoup  # 导入网页解析库
 
-from .models import Candidate, EduRecords, CompanyRecords, ProjectRecords, Comments
+from .models import Candidate, EduRecords, CompanyRecords, ProjectRecords, Comments, ActivateRecord
 
 
 def get_candidate_info_by_id(candidate_id):
@@ -14,12 +14,13 @@ def get_candidate_info_by_id(candidate_id):
     company_records_list = CompanyRecords.objects.all().order_by('-work_start_date').filter(candidate=candidate_id)
     project_records_list = ProjectRecords.objects.all().order_by('-project_start_date').filter(candidate=candidate_id)
     comments_list = Comments.objects.all().order_by('-comment_created_date').filter(candidate=candidate_id)
-    return candidate, edu_record_list, company_records_list, project_records_list, comments_list
+    activate_record = ActivateRecord.objects.order_by('-activate_record_created_date').filter(candidate=candidate_id).first()
+    return candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record
 
 
 @login_required
 def add_candidate_comment(request, candidate_id):
-    candidate, edu_record_list, company_records_list, project_records_list, comments_list = get_candidate_info_by_id(candidate_id)
+    candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record = get_candidate_info_by_id(candidate_id)
     # page_obj = ''
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -41,18 +42,20 @@ def add_candidate_comment(request, candidate_id):
                                                                 'project_records_list': project_records_list,
                                                                 'comments_list': comments_list,
                                                                 'form': form,
+                                                                'activate_record': activate_record,
                                                                 'system_user': request.user.username})
 
 
 def candidate_detail(request, candidate_id):
     form = CommentForm()
-    candidate, edu_record_list, company_records_list, project_records_list, comments_list = get_candidate_info_by_id(candidate_id)
+    candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record = get_candidate_info_by_id(candidate_id)
     return render(request, 'candidates/candidate_detail.html', {'candidate': candidate,
                                                                 'edu_record_list': edu_record_list,
                                                                 'company_records_list': company_records_list,
                                                                 'project_records_list': project_records_list,
                                                                 'comments_list': comments_list,
                                                                 'form': form,
+                                                                'activate_record': activate_record,
                                                                 'system_user': request.user.username})
 
 
@@ -66,8 +69,8 @@ def get_cv_info_dict(request, cv_contents):
     # 基本信息
     basic_username = soup.find(class_="name ellipsis").text if soup.find(class_="name ellipsis") else ""  # 王先生
     basic_user_status = soup.find(class_="user-status-tag").text if soup.find(class_="user-status-tag") else ""  # 方便联系时间：随时联系
-    work_position = soup.select('.basic-cont .sep-info')[1].contents[0].string if soup.select('.basic-cont .sep-info')[1].contents[0] else ""
-    work_company = soup.select('.basic-cont .sep-info')[1].contents[2].string if soup.select('.basic-cont .sep-info')[1].contents[2] else ""  # 王先生
+    cur_work_position = soup.select('.basic-cont .sep-info')[1].contents[0].string if soup.select('.basic-cont .sep-info')[1].contents[0] else ""
+    cur_work_company = soup.select('.basic-cont .sep-info')[1].contents[2].string if soup.select('.basic-cont .sep-info')[1].contents[2] else ""  # 王先生
     self_judgement = soup.select('.resume-detail-self-evaluation-info .resume-detail-template-cont')[0].text if soup.select('.resume-detail-self-evaluation-info .resume-detail-template-cont') else ""
     additional_comments = soup.select('.resume-detail-addition-info .resume-detail-template-cont')[0].text if soup.select('.resume-detail-addition-info .resume-detail-template-cont') else ""
 
@@ -269,12 +272,12 @@ def get_cv_info_dict(request, cv_contents):
             basic_work_years=basic_work_years,
             basic_work_start_year=basic_work_start_year,
             basic_is_unified=basic_is_unified,
-            basic_is_985=basic_is_unified,
-            basic_is_211=basic_is_unified,
+            basic_is_985=basic_is_985,
+            basic_is_211=basic_is_211,
 
-            work_position=work_position,
+            work_position=cur_work_position,
             work_city=work_city,
-            work_company=work_company,
+            work_company=cur_work_company,
             work_salary=work_salary,
             work_industry=work_industry,
 
@@ -354,14 +357,53 @@ def candidate_file_upload(request):
             page_obj, candidate_id = handle_uploaded_file(request, request.FILES['file'])
             # return render(request, 'candidates/index.html', {'page_obj': page_obj, 'form': form, })
             comment_form = CommentForm()
-            candidate, edu_record_list, company_records_list, project_records_list, comments_list = get_candidate_info_by_id(candidate_id)
+            candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record = get_candidate_info_by_id(candidate_id)
             return render(request, 'candidates/candidate_detail.html', {'candidate': candidate,
                                                                         'edu_record_list': edu_record_list,
                                                                         'company_records_list': company_records_list,
                                                                         'project_records_list': project_records_list,
                                                                         'comments_list': comments_list,
                                                                         'comment_form': comment_form,
+                                                                        'activate_record': activate_record,
                                                                         'system_user': request.user.username})
     else:
         form = UploadFileForm()
     return render(request, 'candidates/index.html', {'form': form})
+
+
+def activate_candidate(request, candidate_id):
+    candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record = get_candidate_info_by_id(candidate_id)
+    if not activate_record or not activate_record.is_activate_record:
+        activate_record = ActivateRecord.objects.create(
+            is_activate_record=True,
+            activate_record_creator=request.user.username,
+            candidate=candidate,
+        )
+    form = CommentForm()
+    return render(request, 'candidates/candidate_detail.html', {'candidate': candidate,
+                                                                'edu_record_list': edu_record_list,
+                                                                'company_records_list': company_records_list,
+                                                                'project_records_list': project_records_list,
+                                                                'comments_list': comments_list,
+                                                                'form': form,
+                                                                'activate_record': activate_record,
+                                                                'system_user': request.user.username})
+
+
+def deactivate_candidate(request, candidate_id):
+    candidate, edu_record_list, company_records_list, project_records_list, comments_list, activate_record = get_candidate_info_by_id(candidate_id)
+    if activate_record and activate_record.is_activate_record:
+        activate_record = ActivateRecord.objects.filter(id=activate_record.id).update(
+            is_activate_record=False,
+            activate_record_canceller=request.user.username,
+            activate_record_cancel_date=datetime.now()
+        )
+    form = CommentForm()
+    return render(request, 'candidates/candidate_detail.html', {'candidate': candidate,
+                                                                'edu_record_list': edu_record_list,
+                                                                'company_records_list': company_records_list,
+                                                                'project_records_list': project_records_list,
+                                                                'comments_list': comments_list,
+                                                                'form': form,
+                                                                'activate_record': activate_record,
+                                                                'system_user': request.user.username})

@@ -51,6 +51,26 @@
                                             <i class="separated">|</i>
                                             <span>最后编辑：{{ candidate.candidate_last_editor }}</span>
                                             <i class="separated">|</i>
+                                            {% if activate_record.is_activate_record %}
+                                                <span>{{ activate_record.activate_record_creator }} 申报于 {{ activate_record.activate_record_created_date }}</span>
+                                                {% if user.get_username in 'candice|aoki'  %}
+                                                    <i class="separated">|</i>
+                                                    <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                        type="submit"
+                                                        class="hunt-btn primary chat-btn"
+                                                        onclick="location.href='{% url 'candidates:deactivate_candidate' candidate.id %}'">
+                                                        <span>取消申报</span>
+                                                    </button>
+                                                {% endif %}
+                                            {% else %}
+                                                <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                    type="submit"
+                                                    class="hunt-btn primary chat-btn"
+                                                    onclick="location.href='{% url 'candidates:activate_candidate' candidate.id %}'">
+                                                    <span>申报指标</span>
+                                                </button>
+                                            {% endif %}
+                                            <i class="separated">|</i>
                                             <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
                                                     type="submit"
                                                     class="hunt-btn primary chat-btn"
@@ -107,6 +127,14 @@
                                                         {% if candidate.basic_user_status %}
                                                             <span class="user-status-tag">{{ candidate.basic_user_status }}</span>
                                                         {% endif %}
+
+                                                        <button data_info="%7B%22sfrom%22%3A%22MY_RESUME%22%7D"
+                                                                type="submit"
+                                                                class="hunt-btn primary chat-btn"
+                                                                onclick="location.href='/admin/candidates/candidate/{{ candidate.id }}/change/'">
+                                                            <span>编辑</span>
+                                                        </button>
+
                                                     </div>
 
                                                     <div class="sep-info">
@@ -187,6 +215,7 @@
 
                                             <div class="resume-detail-template resume-detail-work-info" id="resume-detail-work-info">
                                                 <h3>工作经历</h3>
+
                                                 <div class="resume-detail-template-cont">
                                                     {% for company_records in company_records_list %}
                                                         <div class="rd-info-tpl-item rd-work-item-cont">
@@ -196,7 +225,7 @@
                                                                         <h5 class="ellipsis" title="{{ company_records.work_company }}">{{ company_records.work_company }}</h5>
                                                                     </div>
                                                                     <span class="rd-work-time">  {{ company_records.work_company_type }}</span>
-                                                                    <span class="rd-work-time">（{{ company_records.work_start_date }} - {{ company_records.work_start_date }})</span>
+                                                                    <span class="rd-work-time">（{{ company_records.work_start_date }} - {{ company_records.work_end_date }})</span>
 
                                                                 </div>
                                                             </div>
@@ -375,7 +404,7 @@
                     <section class="single-resume-right">
                         <div class="resume-node-box">
                             <div class="resume-node-recent">
-                                <div class="title-box flex align-items-center">
+                                <div class="title-box align-items-center">
                                     <h3>简历备注</h3>
                                 </div>
 

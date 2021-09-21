@@ -23,6 +23,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     networks:  # <-- connect to the bridge
       - database_network
+    ports:
+      - 15432:5432
   nginx:
     image: nginx
     ports:

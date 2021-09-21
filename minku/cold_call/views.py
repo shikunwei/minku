@@ -1,9 +1,10 @@
 import csv
 import codecs
-from django.shortcuts import render
-
-from .forms import UploadFileForm
-from .models import ColdCall
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .forms import UploadFileForm, CommentForm
+from .models import ColdCall, Comments
+from candidates.models import Candidate
 
 
 def cold_call_index(request):
@@ -12,7 +13,6 @@ def cold_call_index(request):
 
 
 def handle_uploaded_file(file):
-    print("aaaaaaaaaaaaaaaaaaaaaaa")
     info_dict = {}
     info_dict["info_dict_title"] = []
     info_dict["info_dict_title"].append("公司")
@@ -24,7 +24,6 @@ def handle_uploaded_file(file):
         info_dict["info_dict_title"].append("城市区域")
     else:
         district_name = ""
-    print("bbbbbbbbbbbbbbbbbbbbbb")
 
     reader = csv.DictReader(codecs.iterdecode(file, 'gb18030'))
     for call_infos in reader:
@@ -41,7 +40,6 @@ def handle_uploaded_file(file):
         info_dict[call_infos["姓名"]]["公司"] = company_name
         info_dict[call_infos["姓名"]]["城市区域"] = district_name
 
-        print("ccccccccccccccccccccccccc")
         if district_name:
             info_dict[call_infos["姓名"]]["城市区域"] = district_name
 
@@ -83,3 +81,44 @@ def cold_call_file_upload(request):
     else:
         form = UploadFileForm()
     return render(request, 'cold_call/index.html', {'form': form})
+
+
+def get_cold_call_info_by_id(cold_call_id):
+    cold_call = get_object_or_404(ColdCall, pk=cold_call_id)
+    candidate = Candidate.objects.filter(basic_phone=cold_call.basic_phone).first()
+    comments_list = Comments.objects.all().order_by('-cc_comment_created_date').filter(cold_call=cold_call_id)
+    return cold_call, comments_list, candidate
+
+
+@login_required
+def add_cold_call_comment(request, cold_call_id):
+    cold_call, comments_list, candidate = get_cold_call_info_by_id(cold_call_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            print(form)
+            print(request.user.username)
+            try:
+                comment = Comments.objects.create(
+                    comment_content=form.cleaned_data['comment_content'],
+                    cc_comment_creator=request.user.username,
+                    cold_call=cold_call,
+                )
+            except Exception as e:
+                print(e)
+    form = CommentForm()
+    return render(request, 'cold_call/cold_call_detail.html', {'cold_call': cold_call,
+                                                               'candidate': candidate,
+                                                               'comments_list': comments_list,
+                                                               'form': form,
+                                                               'system_user': request.user.username})
+
+
+def cold_call_detail(request, cold_call_id):
+    form = CommentForm()
+    cold_call, comments_list, candidate = get_cold_call_info_by_id(cold_call_id)
+    return render(request, 'cold_call/cold_call_detail.html', {'cold_call': cold_call,
+                                                               'candidate': candidate,
+                                                               'comments_list': comments_list,
+                                                               'form': form,
+                                                               'system_user': request.user.username})

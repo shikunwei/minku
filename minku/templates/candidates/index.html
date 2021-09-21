@@ -4,7 +4,7 @@
 {% block content %}
 
 <h3>识别简历信息</h3>
-<form method="POST" class="form-horizontal" role='form' action="{% url 'candidates:candidates_spider' %}" enctype="multipart/form-data">
+<form method="POST" class="form-horizontal" role='form' target="_blank" action="{% url 'candidates:candidates_spider' %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
    <div class="form-group">

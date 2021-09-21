@@ -6,3 +6,4 @@ lxml
 python3-ldap
 django-auth-ldap
 psycopg2>=2.8.6,<2.8.7
+django-import-export
